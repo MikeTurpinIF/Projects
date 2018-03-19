@@ -14,8 +14,8 @@ namespace forgesample.Controllers
         // them after the expires_in time (in seconds)
         private static dynamic InternalToken { get; set; }
         private static dynamic PublicToken { get; set; }
-        private static string FORGE_CLIENT_ID = Environment.GetEnvironmentVariable("FORGE_CLIENT_ID");
-        private static string FORGE_CLIENT_SECRET = Environment.GetEnvironmentVariable("FORGE_CLIENT_SECRET");
+        private static string FORGE_CLIENT_ID = "AysB56f28CoUCmjd51NAswnXG5AFJ8I5";//Environment.GetEnvironmentVariable("FORGE_CLIENT_ID");
+        private static string FORGE_CLIENT_SECRET = "3SqvOGpKSiydXA2Z";//Environment.GetEnvironmentVariable("FORGE_CLIENT_SECRET");
 
         /// <summary>
         /// Get access token with public (viewables:read) scope
