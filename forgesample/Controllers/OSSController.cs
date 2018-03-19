@@ -27,7 +27,7 @@ namespace forgesample.Controllers
                 appBckets.Configuration.AccessToken = oauth.access_token;
 
                 // to simplify, let's return only the first 100 buckets
-                dynamic buckets = await appBckets.GetBucketsAsync("US", 100);
+                dynamic buckets = await appBckets.GetBucketsAsync("US", 10);
                 foreach (KeyValuePair<string, dynamic> bucket in new DynamicDictionaryItems(buckets.items))
                 {
                     nodes.Add(new TreeNode(bucket.Value.bucketKey, bucket.Value.bucketKey, "bucket", true));
