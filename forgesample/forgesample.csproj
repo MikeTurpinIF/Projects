@@ -144,16 +144,18 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -195,6 +197,6 @@
   </Target>
   -->
   <Target Name="BeforeBuild">
-<TransformXml Source="Web.config" Transform="Web.$(Configuration).config" Destination="Web.config" />
-</Target>
+    <TransformXml Source="Web.config" Transform="Web.$(Configuration).config" Destination="Web.config" />
+  </Target>
 </Project>
