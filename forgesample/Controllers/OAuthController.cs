@@ -14,8 +14,8 @@ namespace forgesample.Controllers
         // them after the expires_in time (in seconds)
         private static dynamic InternalToken { get; set; }
         private static dynamic PublicToken { get; set; }
-        private static string FORGE_CLIENT_ID = Environment.GetEnvironmentVariable("FORGE_CLIENT_ID").ToString();
-        private static string FORGE_CLIENT_SECRET = Environment.GetEnvironmentVariable("FORGE_CLIENT_SECRET").ToString();
+        //private static string FORGE_CLIENT_ID = Environment.GetEnvironmentVariable("FORGE_CLIENT_ID").ToString();
+        //private static string FORGE_CLIENT_SECRET = Environment.GetEnvironmentVariable("FORGE_CLIENT_SECRET").ToString();
 
         /// <summary>
         /// Get access token with public (viewables:read) scope
@@ -54,15 +54,15 @@ namespace forgesample.Controllers
             TwoLeggedApi oauth = new TwoLeggedApi();
             string grantType = "client_credentials";
             dynamic bearer = await oauth.AuthenticateAsync(
-              //GetAppSetting("FORGE_CLIENT_ID"),
-              //GetAppSetting("FORGE_CLIENT_SECRET"),
-              FORGE_CLIENT_ID,
-              FORGE_CLIENT_SECRET,
+              GetAppSetting("FORGE_CLIENT_ID"),
+              GetAppSetting("FORGE_CLIENT_SECRET"),
+              //FORGE_CLIENT_ID,
+              //FORGE_CLIENT_SECRET,
               grantType,
               scopes);
             return bearer;
         }
-        /*
+        
         /// <summary>
         /// Reads appsettings from web.config
         /// </summary>
@@ -70,6 +70,6 @@ namespace forgesample.Controllers
         {
             return WebConfigurationManager.AppSettings[settingKey];
         }
-        */
+        
     }
 }
