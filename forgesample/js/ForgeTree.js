@@ -15,7 +15,7 @@
 
 function createNewBucket() {
     var bucketKey = $('#newBucketKey').val();
-    var policyKey = $('#newBucketPolicyKey').val();
+    var policyKey = "persistent" //$('#newBucketPolicyKey').val();
     jQuery.post({
         url: '/api/forge/oss/buckets',
         contentType: 'application/json',
@@ -100,6 +100,14 @@ function autodeskCustomMenu(autodeskNode) {
                         uploadFile(treeNode);
                     },
                     icon: 'glyphicon glyphicon-cloud-upload'
+                },
+                deleteBucket: {
+                    label: "Delete",
+                    action: function () {
+                        var treeNode = $('#appBuckets').jstree(true).get_selected(true)[0];
+                        deleteBucket(treeNode);
+                    },
+                    icon: 'glyphicon glyphicon-trash',
                 }
             };
             break;
@@ -111,7 +119,23 @@ function autodeskCustomMenu(autodeskNode) {
                         var treeNode = $('#appBuckets').jstree(true).get_selected(true)[0];
                         translateObject(treeNode);
                     },
-                    icon: 'glyphicon glyphicon-eye-open'
+                    icon: 'glyphicon glyphicon-eye-open',
+                },
+                deleteFile: {
+                    label: "Delete",
+                    action: function () {
+                        var treeNode = $('#appBuckets').jstree(true).get_selected(true)[0];
+                        deleteObject(treeNode);
+                    },
+                    icon: 'glyphicon glyphicon-trash',
+                },
+                downloadFile: {
+                label: "Download",
+                action: function () {
+                    var treeNode = $('#appBuckets').jstree(true).get_selected(true)[0];
+                    downloadObject(treeNode);
+                },
+                icon: 'glyphicon glyphicon-bitcoin',
                 }
             };
             break;
@@ -158,5 +182,51 @@ function translateObject(node) {
         success: function (res) {
             $("#forgeViewer").html('Translation started! Please try again in a moment.');
         },
+    });
+}
+
+function deleteObject(node) {
+    $("#forgeViewer").empty();
+    if (node == null) node = $('#appBuckets').jstree(true).get_selected(true)[0];
+    var bucketKey = node.parents[0];
+    var objectName = node.text;
+    jQuery.post({
+        url: 'api/forge/object/delete',
+        contentType: 'application/json',
+        data: JSON.stringify({ 'bucketKey': bucketKey, 'objectName': objectName }),
+        success: function (res) {
+            $("#forgeViewer").html('File Deleted');
+            $('#appBuckets').jstree(true).refresh();
+        }
+    });
+}
+
+function downloadObject(node) {
+    $("#forgeViewer").empty();
+    if (node == null) node = $('#appBuckets').jstree(true).get_selected(true)[0];
+    var bucketKey = node.parents[0];
+    var objectName = node.text;
+    jQuery.post({
+        url: 'api/forge/object/download',
+        contentType: 'application/json',
+        data: JSON.stringify({ 'bucketKey': bucketKey, 'objectName': objectName }),
+        success: function (res) {
+            $("#forgeViewer").html('File Downloaded to "Downloads" folder');
+        }
+    });
+}
+
+function deleteBucket(node) {
+    $("#forgeViewer").empty();
+    if (node == null) node = $('#appBuckets').jstree(true).get_selected(true)[0];
+    var bucketKey = node.id;
+    jQuery.post({
+        url: 'api/forge/bucket/delete',
+        contentType: 'application/json',
+        data: JSON.stringify({ 'bucketKey': bucketKey}),
+        success: function (res) {
+            $("#forgeViewer").html('Bucket Deleted');
+            $('#appBuckets').jstree(true).refresh();
+        }
     });
 }

@@ -14,8 +14,6 @@ namespace forgesample.Controllers
         // them after the expires_in time (in seconds)
         private static dynamic InternalToken { get; set; }
         private static dynamic PublicToken { get; set; }
-        //private static string FORGE_CLIENT_ID = Environment.GetEnvironmentVariable("FORGE_CLIENT_ID").ToString();
-        //private static string FORGE_CLIENT_SECRET = Environment.GetEnvironmentVariable("FORGE_CLIENT_SECRET").ToString();
 
         /// <summary>
         /// Get access token with public (viewables:read) scope
@@ -39,7 +37,7 @@ namespace forgesample.Controllers
         {
             if (InternalToken == null || InternalToken.ExpiresAt < DateTime.UtcNow)
             {
-                InternalToken = await Get2LeggedTokenAsync(new Scope[] { Scope.BucketCreate, Scope.BucketRead, Scope.DataRead, Scope.DataCreate });
+                InternalToken = await Get2LeggedTokenAsync(new Scope[] { Scope.BucketCreate, Scope.BucketRead, Scope.BucketDelete, Scope.DataWrite, Scope.DataRead, Scope.DataCreate});
                 InternalToken.ExpiresAt = DateTime.UtcNow.AddSeconds(InternalToken.expires_in);
             }
 
@@ -56,8 +54,6 @@ namespace forgesample.Controllers
             dynamic bearer = await oauth.AuthenticateAsync(
               GetAppSetting("FORGE_CLIENT_ID"),
               GetAppSetting("FORGE_CLIENT_SECRET"),
-              //FORGE_CLIENT_ID,
-              //FORGE_CLIENT_SECRET,
               grantType,
               scopes);
             return bearer;
