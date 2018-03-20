@@ -8,10 +8,29 @@ function launchViewer(urn) {
     var documentId = 'urn:' + urn;
     Autodesk.Viewing.Initializer(options, function onInitialized() {
         viewerApp = new Autodesk.Viewing.ViewingApplication('forgeViewer');
-        var config3d = {
-            extensions: ['MyAwesomeExtension']
+        //var config = {
+        //    extensions: ["Autodesk.InViewerSearch"],
+        //    inViewerSearchConfig : {
+        //        uiEnabled: true,
+        //        clientId: "adsk.forge.default",
+        //        sessionId: "F969EB70-242F-11E6-BDF4-0800200C9A66",
+        //        loadedModelTab: {
+        //            enabled: true,  // If false, the tab is hidden.
+        //            displayName: 'This View',
+        //            pageSize: 50
+        //        },
+        //        relatedItemsTab:{
+        //            enabled: true,  // If false, the tab is hidden.
+        //            displayName: 'This Item',
+        //            pageSize: 20
+        //        }
+        //    }
+        //};
+        var config = {
+            extensions: ["Autodesk.Viewing.Collaboration"],
+            
         };
-        viewerApp.registerViewer(viewerApp.k3D, Autodesk.Viewing.Private.GuiViewer3D, config3d);
+        viewerApp.registerViewer(viewerApp.k3D, Autodesk.Viewing.Private.GuiViewer3D, config);
         viewerApp.loadDocument(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
     });
 }

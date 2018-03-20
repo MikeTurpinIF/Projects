@@ -29,6 +29,13 @@ namespace forgesample.Controllers
            JobPayloadItem.ViewsEnum._2d,
            JobPayloadItem.ViewsEnum._3d
          })
+       //  ,
+       //new JobPayloadItem(
+       //  JobPayloadItem.TypeEnum.Step,
+       //  new List<JobPayloadItem.ViewsEnum>()
+       //  {
+       //    JobPayloadItem.ViewsEnum._3d
+       //  })
       };
             JobPayload job;
             job = new JobPayload(new JobPayloadInput(objModel.objectName), new JobPayloadOutput(outputs));
